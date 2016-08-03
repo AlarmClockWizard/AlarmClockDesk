@@ -52,8 +52,8 @@ bool RadioSettings::isEntertainmentChannelActive() const
   }
   else
   {
-    uint64 currentTicks = millis();
-    return _entertainmentChannelEndTicks > currentTicks;
+    uint64 currentSeconds = (uint64)(millis())/(uint64)(1000);
+    return _entertainmentChannelEndTicks > currentSeconds;
   }
   return false;
 }

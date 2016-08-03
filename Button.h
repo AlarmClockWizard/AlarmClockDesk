@@ -68,6 +68,7 @@ namespace AlarmClock
       Button();
       ~Button();
       void setup(String text, MI0283QT2* lcd, ADS7846* touch, uint16 posX, uint16 posY, uint16 dimX, uint16 dimY, uint16 textColor, uint16 bgColor, uint16 activeTextColor, uint16 activeBGColor, uint16 pressedTextColor, uint16 pressedBGColor, uint16 textOffsetX, uint16 textOffsetY );
+      void redraw();
       void draw();
       void drawToogle();
 

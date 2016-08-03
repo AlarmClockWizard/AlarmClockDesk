@@ -29,7 +29,11 @@ Label::Label()
   _stateIsHiddenOld = !_stateIsHidden;  
   _textSize = 0;
   _text = "";
-  _lcd = 0;
+  _lcd = NULL;
+  _posX = 0;
+  _posX = 0;
+  _textColor = 0;
+  _bgColor = 0;     
 }
 
 Label::~Label()
@@ -59,18 +63,21 @@ void Label::setup
 
 void Label::draw()
 {
-  if(_stateIsHiddenOld != _stateIsHidden)
+  if(_lcd != NULL)
   {
-    _stateIsHiddenOld = _stateIsHidden;
-    if(_stateIsHidden)
+    if(_stateIsHiddenOld != _stateIsHidden)
     {
-      _lcd->drawText(_posX,_posY, _text, _textSize, Defines::guiBGColor, Defines::guiBGColor);   
-    }
-    else
-    {
-      _lcd->drawText(_posX,_posY, _text, _textSize, _textColor, _bgColor); 
-    }     
-  } 
+      _stateIsHiddenOld = _stateIsHidden;
+      if(_stateIsHidden)
+      {
+	_lcd->drawText(_posX,_posY, _text, _textSize, Defines::guiBGColor, Defines::guiBGColor);   
+      }
+      else
+      {
+	_lcd->drawText(_posX,_posY, _text, _textSize, _textColor, _bgColor); 
+      }     
+    } 
+  }
 }
 
 void Label::setHidden()

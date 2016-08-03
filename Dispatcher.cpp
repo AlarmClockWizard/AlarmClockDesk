@@ -337,21 +337,13 @@ namespace AlarmClock
     uint8 newPageIndex = getDisplayPageIndex(_currentTime);   
     if(newPageIndex != _currentPageIndex)
     {
-      Serial.println("newPageIndex != _currentPageIndex");
-      Serial.print("_currentPageIndex = ");
-      Serial.println(_currentPageIndex);
-      Serial.print("newPageIndex = ");
-      Serial.println(newPageIndex); 
-      
       //the current page index has changed so we might have to hide the schedule or radio gui
       if(_currentPageIndex <= 6 && newPageIndex == 7)
       {
-	Serial.println("showRadioPage");
 	_gui.showRadioPage();
       }
       else if(_currentPageIndex == 7 && newPageIndex <= 6)
       {
-	Serial.println("showSchedulePage");
 	_gui.showSchedulePage();
       }  
       _currentPageIndex = newPageIndex;

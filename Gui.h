@@ -56,7 +56,7 @@ namespace AlarmClock
 
       SpinBox _spinBoxHour;  
       SpinBox _spinBoxMinute;  
-           
+      
       Button _buttonSave;    
       Button _buttonLoad;
       Button _toggleButtonConfig;
@@ -74,7 +74,7 @@ namespace AlarmClock
       Button _radioButtonLoad;
       Button _radioToggleButtonConfig;
       Button _radioToggleButtonEntertainment; 
-      //Button _radioLabelButtonEntertainment;
+      Button _radioLabelButtonEntertainment;
       Button _radioButtonFiveMinutes; 
       Button _radioButtonOneHour;            
       SpinBox _radioSpinBoxChannel0;

@@ -25,6 +25,7 @@ namespace AlarmClock
   
 SpinBox::SpinBox()
 {
+  _stateIsEnabled = true;
   _stateIsHidden = false;
   _stateIsHiddenOld = _stateIsHidden; 
   _minimumValue = 0;
@@ -33,7 +34,19 @@ SpinBox::SpinBox()
   _dimX = 30;
   _dimY = 15;
   _oldValue = 99;
-  _lastPressedTicks = 0;
+  _lastPressedTicks = 0;  
+  _lcd = NULL; 
+  _touch = NULL;
+  _posX = 0;
+  _posY = 0;
+  _textColor = 0;
+  _bgColor = 0;
+  _activeTextColor = 0;
+  _activeBGColor = 0;
+  _pressedTextColor = 0;
+  _pressedBGColor = 0; 
+  _valueTextColor = 0;
+  _valueBGColor = 0;
 }
 
 SpinBox::~SpinBox()
@@ -159,41 +172,44 @@ void SpinBox::paint(uint16 value)
 
 void SpinBox::paintValue(uint16 value, uint16 textColor, uint16 fillColor)
 {
-  int8 textSizeOffsetX0 = 0;
-  int8 textSizeOffsetX = 0;
-  int8 textSizeOffsetY = 0; 
-  if( _textSize == 2 )
+  if(_lcd != NULL)
   {
-    textSizeOffsetX0 = 2;
-    textSizeOffsetX  = 15;
-    textSizeOffsetY  = 20;
-  }
-  if( _textSize == 1 )
-  {
-    textSizeOffsetX0 = 6;
-    textSizeOffsetX  = 15;
-    textSizeOffsetY  = 18;
-  }  
-
-  if(value > 99)
-  {
-    uint16 firstDigit  = value / 100;
-    uint16 secondDigit = (value - 100*firstDigit) / 10;
-    uint16 thirdDigit  = value % 10;
-  
-    textSizeOffsetX0 -= 7;
-    _lcd->drawInteger(_posX + textSizeOffsetX0                    , _posY + textSizeOffsetY, uint8(firstDigit) , DEC, _textSize, textColor, fillColor);
-    _lcd->drawInteger(_posX + textSizeOffsetX0 + textSizeOffsetX  , _posY + textSizeOffsetY, uint8(secondDigit), DEC, _textSize, textColor, fillColor);
-    _lcd->drawInteger(_posX + textSizeOffsetX0 + 2*textSizeOffsetX, _posY + textSizeOffsetY, uint8(thirdDigit) , DEC, _textSize, textColor, fillColor);
-  }
-  else
-  {   
-    if(_oldValue < 100)
+    int8 textSizeOffsetX0 = 0;
+    int8 textSizeOffsetX = 0;
+    int8 textSizeOffsetY = 0; 
+    if( _textSize == 2 )
     {
-      _lcd->drawText (_posX + textSizeOffsetX0 - (textSizeOffsetX/2), _posY + textSizeOffsetY, "   ", _textSize, textColor, fillColor);  
-    } 
-    _lcd->drawInteger(_posX + textSizeOffsetX0                  , _posY + textSizeOffsetY, uint8(value / 10), DEC, _textSize, textColor, fillColor);
-    _lcd->drawInteger(_posX + textSizeOffsetX0 + textSizeOffsetX, _posY + textSizeOffsetY, uint8(value % 10), DEC, _textSize, textColor, fillColor);
+      textSizeOffsetX0 = 2;
+      textSizeOffsetX  = 15;
+      textSizeOffsetY  = 20;
+    }
+    if( _textSize == 1 )
+    {
+      textSizeOffsetX0 = 6;
+      textSizeOffsetX  = 15;
+      textSizeOffsetY  = 18;
+    }  
+
+    if(value > 99)
+    {
+      uint16 firstDigit  = value / 100;
+      uint16 secondDigit = (value - 100*firstDigit) / 10;
+      uint16 thirdDigit  = value % 10;
+    
+      textSizeOffsetX0 -= 7;
+      _lcd->drawInteger(_posX + textSizeOffsetX0                    , _posY + textSizeOffsetY, uint8(firstDigit) , DEC, _textSize, textColor, fillColor);
+      _lcd->drawInteger(_posX + textSizeOffsetX0 + textSizeOffsetX  , _posY + textSizeOffsetY, uint8(secondDigit), DEC, _textSize, textColor, fillColor);
+      _lcd->drawInteger(_posX + textSizeOffsetX0 + 2*textSizeOffsetX, _posY + textSizeOffsetY, uint8(thirdDigit) , DEC, _textSize, textColor, fillColor);
+    }
+    else
+    {   
+      if(_oldValue < 100)
+      {
+	_lcd->drawText (_posX + textSizeOffsetX0 - (textSizeOffsetX/2), _posY + textSizeOffsetY, "   ", _textSize, textColor, fillColor);  
+      } 
+      _lcd->drawInteger(_posX + textSizeOffsetX0                  , _posY + textSizeOffsetY, uint8(value / 10), DEC, _textSize, textColor, fillColor);
+      _lcd->drawInteger(_posX + textSizeOffsetX0 + textSizeOffsetX, _posY + textSizeOffsetY, uint8(value % 10), DEC, _textSize, textColor, fillColor);
+    }
   }
 }
 

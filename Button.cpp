@@ -40,6 +40,22 @@ Button::Button()
   _lastPressedTicks       = millis();
   _lastPressedState	  = false;
   _buttonWasInUnpressedState = true;
+      
+  _text = "";
+  _lcd = NULL; 
+  _touch = NULL;
+  _posX = 0;
+  _posY = 0;
+  _dimX = 0;
+  _dimY = 0;
+  _textColor = 0;
+  _bgColor = 0;
+  _activeTextColor = 0;
+  _activeBGColor = 0;
+  _pressedTextColor = 0;
+  _pressedBGColor = 0;
+  _textOffsetX = 0; 
+  _textOffsetY = 0;   
 }
 
 Button::~Button()
@@ -82,26 +98,6 @@ void Button::setup
   _textOffsetX = textOffsetX;
   _textOffsetY = textOffsetY; 
 }
-/*
-void Button::drawToogle()
-{
-  _stateIsPressed = isPressed();
-  
-  if(_stateIsPressed == true)
-  {
-    if(_buttonWasInUnpressedState == true)
-    {
-      _stateIsActive = !_stateIsActive;
-      _buttonWasInUnpressedState = false;
-    }
-  }
-  else
-  {
-    _buttonWasInUnpressedState = true;
-  }
-  
-  draw();
-}*/
 
 void Button::drawToogle()
 {
@@ -126,61 +122,68 @@ void Button::draw()
     paint();
   }
 }
+void Button::redraw()
+{
+  paint();
+}
 
 void Button::paint()
 {
-   if(_stateIsHidden)
-   {
-    _lcd->fillRect(_posX, _posY, _posX + _dimX, _posY + _dimY, Defines::guiBGColor);
-   }
-   else
-   {
-    //normal colors (unpressed and not activated
-    uint16 textColor = _textColor;
-    uint16 bgColor = _bgColor;
-
-    //overwrite color if button is toggled active
-    if(_stateIsActive)
+  if(_lcd != NULL)
+  {
+    if(_stateIsHidden)
     {
-      textColor = _activeTextColor;
-      bgColor = _activeBGColor;
-    }       
-
-    //if button is currently pressed this will overwrite the other colors
-    if(_stateIsPressed)
-    {
-      textColor = _pressedTextColor;
-      bgColor = _pressedBGColor;
+      _lcd->fillRect(_posX, _posY, _posX + _dimX, _posY + _dimY, Defines::guiBGColor);
     }
-
-    //draw button background
-    _lcd->fillRect(_posX, _posY, _posX + _dimX, _posY + _dimY, bgColor);
-
-    //draw bar below text if highlightUnderscore is active
-    if( _highlightUnderscore )
+    else
     {
-      String underscoreText = _text;
-      for( uint32 charIndex = 0; charIndex != underscoreText.length(); charIndex++)
+      //normal colors (unpressed and not activated
+      uint16 textColor = _textColor;
+      uint16 bgColor = _bgColor;
+
+      //overwrite color if button is toggled active
+      if(_stateIsActive)
       {
-	underscoreText.setCharAt(charIndex, '_');
+	textColor = _activeTextColor;
+	bgColor = _activeBGColor;
+      }       
+
+      //if button is currently pressed this will overwrite the other colors
+      if(_stateIsPressed)
+      {
+	textColor = _pressedTextColor;
+	bgColor = _pressedBGColor;
       }
 
-      _lcd->drawText(_posX + _textOffsetX, _posY + _textOffsetY + 3, underscoreText, 1, textColor, bgColor);
-    }
+      //draw button background
+      _lcd->fillRect(_posX, _posY, _posX + _dimX, _posY + _dimY, bgColor);
 
-    //draw dot next to button if if _highlightDot is active
-    if( _highlightDot )
-    {      
-      _lcd->fillCircle(_posX + 15 + (_text.length() * 8), _posY + 15, 4, _pressedBGColor); 
-    }
+      //draw bar below text if highlightUnderscore is active
+      if( _highlightUnderscore )
+      {
+	String underscoreText = _text;
+	for( uint32 charIndex = 0; charIndex != underscoreText.length(); charIndex++)
+	{
+	  underscoreText.setCharAt(charIndex, '_');
+	}
 
-    //draw normal text of button
-    _lcd->drawText(_posX + _textOffsetX, _posY + _textOffsetY, _text, 1, textColor, bgColor);
+	_lcd->drawText(_posX + _textOffsetX, _posY + _textOffsetY + 3, underscoreText, 1, textColor, bgColor);
+      }
 
-    //draw "guarding" border arrount button if it is disabled (grayed out without function)
-    if( _stateIsEnabled == false )
-    {      
-      _lcd->drawRect(_posX, _posY, _posX + _dimX, _posY + _dimY, Defines::guiLineColor);
+      //draw dot next to button if if _highlightDot is active
+      if( _highlightDot )
+      {      
+	_lcd->fillCircle(_posX + 15 + (_text.length() * 8), _posY + 15, 4, _pressedBGColor); 
+      }
+
+      //draw "guarding" border arrount button if it is disabled (grayed out without function)
+      if( _stateIsEnabled == false )
+      {      
+	_lcd->drawRect(_posX, _posY, _posX + _dimX, _posY + _dimY, Defines::guiLineColor);
+      }
+      
+      //draw normal text of button
+      _lcd->drawText(_posX + _textOffsetX, _posY + _textOffsetY, _text, 1, textColor, bgColor);
     }
   }
   
@@ -297,19 +300,22 @@ bool Button::wasClicked()
 
 bool Button::isPressedWithoutCooldown()
 {
-  if(_touch->getPressure() > 10) //touch press?
+  if(_touch != NULL)
   {
-    uint16 touchX = _touch->getX();
-    uint16 touchY = _touch->getY();
-
-    if( touchX >= _posX && touchX <= _posX + _dimX )
+    if(_touch->getPressure() > 10) //touch press?
     {
-      if( touchY >= _posY && touchY <= _posY + _dimY )
+      uint16 touchX = _touch->getX();
+      uint16 touchY = _touch->getY();
+
+      if( touchX >= _posX && touchX <= _posX + _dimX )
       {
-        return true;
+	if( touchY >= _posY && touchY <= _posY + _dimY )
+	{
+	  return true;
+	}
       }
     }
-  }   
+  }
   
   return false; 
 }

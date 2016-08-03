@@ -46,13 +46,13 @@ namespace AlarmClock
     //radio
     _radioAlarm                      .setup("alarm" , 1, &_lcd, 231, 35, Defines::guiClockTextColor, Defines::guiClockBGColor);
     _radioEntertainment              .setup("radio" , 1, &_lcd, 275, 35, Defines::guiClockTextColor, Defines::guiClockBGColor);
-    _radioButtonSave                 .setup("Save"  , &_lcd,&_touch, 67,125, 50,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor, Defines::guiButtonActiveBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);
-    _radioButtonLoad                 .setup("Reset" , &_lcd,&_touch,119,125, 50,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor, Defines::guiButtonActiveBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);
+    _radioButtonSave                 .setup("Save"  , &_lcd,&_touch, 67,125, 50,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor , Defines::guiButtonActiveBGColor , Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);
+    _radioButtonLoad                 .setup("Reset" , &_lcd,&_touch,119,125, 50,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor , Defines::guiButtonActiveBGColor , Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);
     _radioToggleButtonConfig         .setup("Config", &_lcd,&_touch,  5,125, 60,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);    
     _radioButtonFiveMinutes          .setup("+ 5"   , &_lcd,&_touch, 67, 40, 50,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);  
     _radioButtonOneHour              .setup("+ 60"  , &_lcd,&_touch,119, 40, 50,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);  
     _radioToggleButtonEntertainment  .setup("Radio" , &_lcd,&_touch,  5, 40, 60,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);  
-    //_radioLabelButtonEntertainment   .setup(""      , &_lcd,&_touch,  5, 75,164,45,Defines::guiButtonTextColor, Defines::guiButtonTextColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);  
+    _radioLabelButtonEntertainment   .setup(""      , &_lcd,&_touch,  5, 75,164,45,Defines::guiBGColor        , Defines::guiBGColor      , Defines::guiBGColor               , Defines::guiBGColor             , Defines::guiBGColor               , Defines::guiBGColor             ,7,10);  
     _radioSpinBoxChannel0            .setup(0,999,2 , &_lcd,&_touch,190, 45,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor, Defines::guiButtonActiveBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiClockTextColor, Defines::guiClockBGColor);
     _radioSpinBoxChannel1            .setup(0,999,2 , &_lcd,&_touch,190,110,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor, Defines::guiButtonActiveBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiClockTextColor, Defines::guiClockBGColor);
     _radioSpinBoxChannel2            .setup(0,999,2 , &_lcd,&_touch,190,175,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor, Defines::guiButtonActiveBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiClockTextColor, Defines::guiClockBGColor);  
@@ -93,7 +93,7 @@ namespace AlarmClock
     _buttonSave        .setup("Save"  , &_lcd,&_touch, 67,125,50,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor, Defines::guiButtonActiveBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);
     _buttonLoad        .setup("Reset" , &_lcd,&_touch,119,125,50,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonActiveTextColor, Defines::guiButtonActiveBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);
     _toggleButtonConfig.setup("Config", &_lcd,&_touch,  5,125,60,30,Defines::guiButtonTextColor, Defines::guiButtonBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor, Defines::guiButtonPressedTextColor, Defines::guiButtonPressedBGColor,7,10);    
-    _toggleButtonConfig.setActive();//#############
+    _toggleButtonConfig.setActive();//############# to enable the buttons for simple testing
     
     _labelForSpinBoxRadio .setup("-", 1, &_lcd, 264, 53, Defines::guiClockTextColor, Defines::guiClockBGColor);
     _labelForSpinBoxBuzzer.setup("-", 1, &_lcd, 264,103, Defines::guiClockTextColor, Defines::guiClockBGColor);
@@ -207,7 +207,7 @@ namespace AlarmClock
     _radioButtonLoad.setHidden(); 
     _radioToggleButtonConfig.setHidden(); 
     _radioToggleButtonEntertainment.setHidden();
-    //_radioLabelButtonEntertainment.setHidden();
+    _radioLabelButtonEntertainment.setHidden();
     _radioButtonFiveMinutes.setHidden(); 
     _radioButtonOneHour.setHidden();            
     _radioSpinBoxChannel0.setHidden(); 
@@ -276,7 +276,7 @@ namespace AlarmClock
     _radioButtonLoad.unsetHidden(); 
     _radioToggleButtonConfig.unsetHidden(); 
     _radioToggleButtonEntertainment.unsetHidden();  
-    //_radioLabelButtonEntertainment.unsetHidden();
+    _radioLabelButtonEntertainment.unsetHidden();
     _radioButtonFiveMinutes.unsetHidden(); 
     _radioButtonOneHour.unsetHidden();            
     _radioSpinBoxChannel0.unsetHidden(); 
@@ -452,20 +452,40 @@ namespace AlarmClock
       _radioButtonFiveMinutes.draw(); 
       _radioButtonOneHour.draw(); 
       
-      //update entertainment radio timers
+      if(_radioToggleButtonEntertainment.isActive())
       {
+	_radioButtonFiveMinutes.unsetEnabled();
+	_radioButtonOneHour.unsetEnabled();
+      }
+      else
+      {
+	_radioButtonFiveMinutes.setEnabled();
+	_radioButtonOneHour.setEnabled();
+      }
+      
+      //was the entertainment label button clicked (which serves as "hidden" reset) or
+      //was the radio toogle button clicked (which serves also as an reset)
+      if(  _radioLabelButtonEntertainment.wasClicked() 
+	|| _radioToggleButtonEntertainment.isActive())
+      {
+	radioSettings->setEntertainmentChannelEndTicks(0);
+	_radioLabelButtonEntertainment.redraw();
+      }
+      else
+      {
+	//update entertainment radio timers	
+	uint64 currentSeconds = millis() / (uint64)(1000);
 	
-	uint64 currentTicks = millis();
 	//was five minute button pressed
 	if(_radioButtonFiveMinutes.wasClicked())
 	{
 	  if(radioSettings->isEntertainmentChannelActive() == false)
 	  {
-	    radioSettings->setEntertainmentChannelEndTicks(currentTicks);
+	    radioSettings->setEntertainmentChannelEndTicks(currentSeconds + (uint64)(5*60));
 	  }
 	  else
 	  {	  
-	    radioSettings->setEntertainmentChannelEndTicks(currentTicks + ((uint64)(5*60)*(uint64)(1000)));
+	    radioSettings->setEntertainmentChannelEndTicks(radioSettings->getEntertainmentChannelEndTicks() + (uint64)(5*60));
 	  }
 	}
 	
@@ -474,55 +494,33 @@ namespace AlarmClock
 	{
 	  if(radioSettings->isEntertainmentChannelActive() == false)
 	  {
-	    radioSettings->setEntertainmentChannelEndTicks(currentTicks);
+	    radioSettings->setEntertainmentChannelEndTicks(currentSeconds + (uint64)(60*60));
 	  }
 	  else
 	  {	  
-	    radioSettings->setEntertainmentChannelEndTicks(currentTicks + ((uint64)(60*60)*(uint64)(1000)));
+	    radioSettings->setEntertainmentChannelEndTicks(radioSettings->getEntertainmentChannelEndTicks() + (uint64)(60*60));
 	  } 
 	} 
-	
-	//was the entertainment label button clicked (which serves as "hidden" reset)
-	//if(_radioLabelButtonEntertainment.wasClicked())
-	//{
-	//  radioSettings->setEntertainmentChannelEndTicks(0);
-	//  _radioLabelButtonEntertainment.draw();
-	//}
-	
+	 
 	//display label
-/*	uint64 secondsLeft = 0;
-	uint64 endTicks = radioSettings->getEntertainmentChannelEndTicks();
-	if( endTicks > currentTicks)
+	uint64 endSeconds = radioSettings->getEntertainmentChannelEndTicks();
+
+	if(endSeconds > currentSeconds)
 	{
-	  secondsLeft = (endTicks-currentTicks)/(uint64)(1000);
+	  uint64 secondsLeft = endSeconds-currentSeconds;
+	  
+	  uint16 hours   = (secondsLeft / 60 / 60) % 24;
+	  uint16 minutes = (secondsLeft / 60) % 60;
+	  uint16 seconds = secondsLeft % 60;
+	  
+	  //display output
+	  char buffer[16];
+	  sprintf(buffer, "%02i:%02i", hours, minutes);
+	  _lcd.drawText(10, 80, buffer, 3, Defines::guiClockTextColor, Defines::guiClockBGColor);
+	  
+	  sprintf(buffer, ":%02i", seconds);
+	  _lcd.drawText(130, 100, buffer, 1, Defines::guiClockTextColor, Defines::guiClockBGColor);	
 	}
-	
-	uint64 hours = secondsLeft / 60*60;
-	uint64 minutes = (secondsLeft-60*60*hours) / 60;
-	uint64 seconds = secondsLeft-(60*60*hours+60*minutes);
-	
-	Serial.print((uint16)(secondsLeft));
-	Serial.print(":");
-	Serial.print((uint16)(hours));
-	Serial.print(":");
-	Serial.print((uint16)(minutes));
-	Serial.print(":");
-	Serial.println((uint16)(seconds));
-	
-	uint16 hours   = (secondsLeft / 60 / 60) % 24;
-	uint16 minutes = (secondsLeft / 60) % 60;
-	uint16 seconds = secondsLeft % 60;
-	
-	seconds = secondsLeft;
-	
-	//display output
-	char buffer[16];
-	sprintf(buffer, "%02i:%02i", hours, minutes);
-	_lcd.drawText(10, 80, buffer, 3, Defines::guiClockTextColor, Defines::guiClockBGColor);
-	
-	sprintf(buffer, ":%02i", seconds);
-	_lcd.drawText(130, 100, buffer, 1, Defines::guiClockTextColor, Defines::guiClockBGColor);	
-	*/
       }
       
       //update alarm and entertainment settings
